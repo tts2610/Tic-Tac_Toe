@@ -65,9 +65,9 @@ export const boardWidth = 3;
 
 export const history = { 0: board };
 
-export const checkAllFilled = (board) => {
+export const checkAllFilled = () => {
   let flag = true;
-  board.forEach((element) => {
+  this.state.board.forEach((element) => {
     if (!element.isChecked) flag = false;
   });
 

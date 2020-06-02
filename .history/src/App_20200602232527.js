@@ -37,24 +37,16 @@ export default class App extends Component {
           });
           this.setState({ board: list }, () => {
             if (
-              this.checkVertical(element)[0] ||
-              this.checkHorizonal(element)[0] ||
-              this.checkRightDiagonal()[0] ||
-              this.checkLeftDiagonal()[0]
+              this.checkVertical(element) ||
+              this.checkHorizonal(element) ||
+              this.checkRightDiagonal() ||
+              this.checkLeftDiagonal()
             ) {
               this.resetGame();
               alert("Sean Win!!!");
             } else if (mySetting.checkAllFilled(this.state.board)) {
               this.resetGame();
               alert("Draw!!!");
-            } else if (
-              this.checkVertical(element)[1] |
-                this.checkHorizonal(element)[1] ||
-              this.checkRightDiagonal()[1] ||
-              this.checkLeftDiagonal()[1]
-            ) {
-              this.resetGame();
-              alert("Opponent win!!!");
             } else if (!isOpponentTurn) {
               this.setState({
                 currentPhase: this.state.currentPhase + 1,
@@ -91,12 +83,7 @@ export default class App extends Component {
         currentChoice !== element
       )
         countMe++;
-      else if (
-        currentChoice.id[1] === element.id[1] &&
-        element.value === "o" &&
-        currentChoice !== element
-      )
-        countCPU++;
+      else countCPU++;
     });
 
     return [countMe === 3, countCPU === 3];
@@ -112,12 +99,7 @@ export default class App extends Component {
         currentChoice !== element
       )
         countMe++;
-      else if (
-        currentChoice.id[0] === element.id[0] &&
-        element.value === "o" &&
-        currentChoice !== element
-      )
-        countCPU++;
+      else countCPU++;
     });
 
     return [countMe === 3, countCPU === 3];
@@ -135,13 +117,7 @@ export default class App extends Component {
         (mySetting.compareArrays(element.id, [2, 0]) && element.value === "x")
       ) {
         countMe++;
-      } else if (
-        (mySetting.compareArrays(element.id, [0, 2]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [1, 1]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [2, 0]) && element.value === "o")
-      ) {
+      } else {
         countCPU++;
       }
     });
@@ -160,14 +136,7 @@ export default class App extends Component {
         (mySetting.compareArrays(element.id, [2, 2]) && element.value === "x")
       ) {
         countMe++;
-      } else if (
-        (mySetting.compareArrays(element.id, [0, 0]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [1, 1]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [2, 2]) && element.value === "o")
-      )
-        countCPU++;
+      } else countCPU++;
     });
 
     return [countMe === 3, countCPU === 3];
@@ -183,7 +152,6 @@ export default class App extends Component {
         this.setState({
           history: mySetting.history,
           currentPhase: 1,
-          myTurn: true,
         });
       }
     );

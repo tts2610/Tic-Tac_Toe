@@ -42,10 +42,8 @@ export default class App extends Component {
               this.checkRightDiagonal()[0] ||
               this.checkLeftDiagonal()[0]
             ) {
-              this.resetGame();
               alert("Sean Win!!!");
             } else if (mySetting.checkAllFilled(this.state.board)) {
-              this.resetGame();
               alert("Draw!!!");
             } else if (
               this.checkVertical(element)[1] |
@@ -53,9 +51,10 @@ export default class App extends Component {
               this.checkRightDiagonal()[1] ||
               this.checkLeftDiagonal()[1]
             ) {
-              this.resetGame();
               alert("Opponent win!!!");
-            } else if (!isOpponentTurn) {
+            }
+            this.resetGame();
+            if (!isOpponentTurn) {
               this.setState({
                 currentPhase: this.state.currentPhase + 1,
                 history: {
@@ -183,7 +182,6 @@ export default class App extends Component {
         this.setState({
           history: mySetting.history,
           currentPhase: 1,
-          myTurn: true,
         });
       }
     );

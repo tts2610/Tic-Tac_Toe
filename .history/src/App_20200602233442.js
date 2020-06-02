@@ -55,7 +55,8 @@ export default class App extends Component {
             ) {
               this.resetGame();
               alert("Opponent win!!!");
-            } else if (!isOpponentTurn) {
+            }
+            if (!isOpponentTurn) {
               this.setState({
                 currentPhase: this.state.currentPhase + 1,
                 history: {
@@ -183,7 +184,6 @@ export default class App extends Component {
         this.setState({
           history: mySetting.history,
           currentPhase: 1,
-          myTurn: true,
         });
       }
     );

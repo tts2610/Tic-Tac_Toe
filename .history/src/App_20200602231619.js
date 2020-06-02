@@ -37,27 +37,18 @@ export default class App extends Component {
           });
           this.setState({ board: list }, () => {
             if (
-              this.checkVertical(element)[0] ||
-              this.checkHorizonal(element)[0] ||
-              this.checkRightDiagonal()[0] ||
-              this.checkLeftDiagonal()[0]
+              this.checkVertical(element) ||
+              this.checkHorizonal(element) ||
+              this.checkRightDiagonal() ||
+              this.checkLeftDiagonal()
             ) {
               this.resetGame();
               alert("Sean Win!!!");
-            } else if (mySetting.checkAllFilled(this.state.board)) {
-              this.resetGame();
+            } else if (this.checkAllFilled()) {
               alert("Draw!!!");
-            } else if (
-              this.checkVertical(element)[1] |
-                this.checkHorizonal(element)[1] ||
-              this.checkRightDiagonal()[1] ||
-              this.checkLeftDiagonal()[1]
-            ) {
-              this.resetGame();
-              alert("Opponent win!!!");
             } else if (!isOpponentTurn) {
+              this.setState({ currentPhase: this.state.currentPhase + 1 });
               this.setState({
-                currentPhase: this.state.currentPhase + 1,
                 history: {
                   ...this.state.history,
                   [this.state.currentPhase]: this.state.board,
@@ -82,50 +73,35 @@ export default class App extends Component {
   };
 
   checkVertical(currentChoice) {
-    let countMe = 0;
-    let countCPU = 0;
+    let count = 0;
     this.state.board.forEach((element) => {
       if (
         currentChoice.id[1] === element.id[1] &&
         element.value === "x" &&
         currentChoice !== element
       )
-        countMe++;
-      else if (
-        currentChoice.id[1] === element.id[1] &&
-        element.value === "o" &&
-        currentChoice !== element
-      )
-        countCPU++;
+        count++;
     });
 
-    return [countMe === 3, countCPU === 3];
+    return count === 3;
   }
 
   checkHorizonal(currentChoice) {
-    let countMe = 0;
-    let countCPU = 0;
+    let count = 0;
     this.state.board.forEach((element) => {
       if (
         currentChoice.id[0] === element.id[0] &&
         element.value === "x" &&
         currentChoice !== element
       )
-        countMe++;
-      else if (
-        currentChoice.id[0] === element.id[0] &&
-        element.value === "o" &&
-        currentChoice !== element
-      )
-        countCPU++;
+        count++;
     });
 
-    return [countMe === 3, countCPU === 3];
+    return count === 3;
   }
 
   checkRightDiagonal() {
-    let countMe = 0;
-    let countCPU = 0;
+    let count = 0;
     this.state.board.forEach((element) => {
       if (
         (mySetting.compareArrays(element.id, [0, 2]) &&
@@ -134,23 +110,14 @@ export default class App extends Component {
           element.value === "x") ||
         (mySetting.compareArrays(element.id, [2, 0]) && element.value === "x")
       ) {
-        countMe++;
-      } else if (
-        (mySetting.compareArrays(element.id, [0, 2]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [1, 1]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [2, 0]) && element.value === "o")
-      ) {
-        countCPU++;
+        count++;
       }
     });
-    return [countMe === 3, countCPU === 3];
+    return count === 3;
   }
 
   checkLeftDiagonal() {
-    let countMe = 0;
-    let countCPU = 0;
+    let count = 0;
     this.state.board.forEach((element) => {
       if (
         (mySetting.compareArrays(element.id, [0, 0]) &&
@@ -159,18 +126,11 @@ export default class App extends Component {
           element.value === "x") ||
         (mySetting.compareArrays(element.id, [2, 2]) && element.value === "x")
       ) {
-        countMe++;
-      } else if (
-        (mySetting.compareArrays(element.id, [0, 0]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [1, 1]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [2, 2]) && element.value === "o")
-      )
-        countCPU++;
+        count++;
+      }
     });
 
-    return [countMe === 3, countCPU === 3];
+    return count === 3;
   }
 
   resetGame() {
@@ -183,7 +143,6 @@ export default class App extends Component {
         this.setState({
           history: mySetting.history,
           currentPhase: 1,
-          myTurn: true,
         });
       }
     );

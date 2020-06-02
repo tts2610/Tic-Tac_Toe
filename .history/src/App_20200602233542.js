@@ -53,8 +53,8 @@ export default class App extends Component {
               this.checkRightDiagonal()[1] ||
               this.checkLeftDiagonal()[1]
             ) {
-              this.resetGame();
               alert("Opponent win!!!");
+              this.resetGame();
             } else if (!isOpponentTurn) {
               this.setState({
                 currentPhase: this.state.currentPhase + 1,
@@ -183,7 +183,6 @@ export default class App extends Component {
         this.setState({
           history: mySetting.history,
           currentPhase: 1,
-          myTurn: true,
         });
       }
     );

@@ -53,7 +53,6 @@ export default class App extends Component {
               this.checkRightDiagonal()[1] ||
               this.checkLeftDiagonal()[1]
             ) {
-              this.resetGame();
               alert("Opponent win!!!");
             } else if (!isOpponentTurn) {
               this.setState({
@@ -114,7 +113,7 @@ export default class App extends Component {
         countMe++;
       else if (
         currentChoice.id[0] === element.id[0] &&
-        element.value === "o" &&
+        element.value === "x" &&
         currentChoice !== element
       )
         countCPU++;
@@ -135,13 +134,7 @@ export default class App extends Component {
         (mySetting.compareArrays(element.id, [2, 0]) && element.value === "x")
       ) {
         countMe++;
-      } else if (
-        (mySetting.compareArrays(element.id, [0, 2]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [1, 1]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [2, 0]) && element.value === "o")
-      ) {
+      } else {
         countCPU++;
       }
     });
@@ -160,14 +153,7 @@ export default class App extends Component {
         (mySetting.compareArrays(element.id, [2, 2]) && element.value === "x")
       ) {
         countMe++;
-      } else if (
-        (mySetting.compareArrays(element.id, [0, 0]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [1, 1]) &&
-          element.value === "o") ||
-        (mySetting.compareArrays(element.id, [2, 2]) && element.value === "o")
-      )
-        countCPU++;
+      } else countCPU++;
     });
 
     return [countMe === 3, countCPU === 3];
@@ -183,7 +169,6 @@ export default class App extends Component {
         this.setState({
           history: mySetting.history,
           currentPhase: 1,
-          myTurn: true,
         });
       }
     );
