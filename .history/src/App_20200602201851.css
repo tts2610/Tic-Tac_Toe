@@ -1,0 +1,12 @@
+.box {
+    min-width: max-content;
+    height: 150px;
+    border: 1px solid black;
+    border-top: none;
+    display: flex;
+    justify-content: center;
+}
+
+.myLi {
+    list-style-type: none;
+}

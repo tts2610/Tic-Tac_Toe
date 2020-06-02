@@ -1,0 +1,14 @@
+.box {
+    min-width: max-content;
+    height: 150px;
+    /* border: 1px solid black; */
+    border: 10px solid transparent;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border-image: 40 round url(https://media.prod.mdn.mozit.cloud/attachments/2013/08/27/6015/c0cfebb99ed4a78a1251ba974a688524/border-image-5.png);
+}
+
+.myLi {
+    list-style-type: none;
+}

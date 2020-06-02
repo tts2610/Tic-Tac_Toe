@@ -22,16 +22,17 @@ export default class App extends Component {
         },
         () => {
           const list = this.state.board.map((item, j) => {
-            if (item.id === element.id && item.value === "") {
-              return {
-                id: item.id,
-                value: this.state.currentMove,
-                isChecked: true,
-              };
-            } else if (item.value === "") {
-              return { id: item.id, value: item.value, isChecked: false };
+            if (item.isChecked && item.value !== "") {
             } else {
-              return { id: item.id, value: item.value, isChecked: true };
+              if (item.id === element.id && item.value === "") {
+                return {
+                  id: item.id,
+                  value: this.state.currentMove,
+                  isChecked: true,
+                };
+              } else {
+                return { id: item.id, value: item.value, isChecked: false };
+              }
             }
           });
           this.setState({ board: list }, () => {
@@ -174,14 +175,14 @@ export default class App extends Component {
     return (
       <div className="App">
         <Container>
-          <Row className="mt-5">
-            <Col lg={8}>
+          <Row>
+            <Col sm={8}>
               <Board
                 board={this.state.board}
                 onClick={this.onClickSquareHandle}
               />
             </Col>
-            <Col lg={4}>
+            <Col sm={4}>
               <HistoryBoard
                 history={this.state.history}
                 resetPhase={this.resetPhase}

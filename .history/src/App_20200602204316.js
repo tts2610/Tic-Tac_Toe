@@ -28,14 +28,11 @@ export default class App extends Component {
                 value: this.state.currentMove,
                 isChecked: true,
               };
-            } else if (item.value === "") {
-              return { id: item.id, value: item.value, isChecked: false };
             } else {
-              return { id: item.id, value: item.value, isChecked: true };
+              return { id: item.id, value: item.value, isChecked: false };
             }
           });
           this.setState({ board: list }, () => {
-            console.log(this.state.board);
             if (
               this.checkVertical(element) ||
               this.checkHorizonal(element) ||
@@ -133,7 +130,7 @@ export default class App extends Component {
     this.state.board.forEach((element) => {
       if (!element.isChecked) flag = false;
     });
-
+    console.log(this.state.board);
     return flag;
   }
 
@@ -174,14 +171,14 @@ export default class App extends Component {
     return (
       <div className="App">
         <Container>
-          <Row className="mt-5">
-            <Col lg={8}>
+          <Row>
+            <Col sm={8}>
               <Board
                 board={this.state.board}
                 onClick={this.onClickSquareHandle}
               />
             </Col>
-            <Col lg={4}>
+            <Col sm={4}>
               <HistoryBoard
                 history={this.state.history}
                 resetPhase={this.resetPhase}

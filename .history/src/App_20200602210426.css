@@ -12,11 +12,4 @@
 
 .myLi {
     list-style-type: none;
-    display: flex;
-    justify-content: center;
-}
-
-.col-lg-4 {
-    display: flex;
-    justify-content: center;
 }

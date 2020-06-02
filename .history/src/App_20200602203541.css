@@ -1,0 +1,14 @@
+.box {
+    min-width: max-content;
+    height: 220px;
+    /* border: 1px solid black; */
+    border: 10px solid transparent;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border-image: 30 stretch url(https://mdn.mozillademos.org/files/6011/border-image-3.png);
+}
+
+.myLi {
+    list-style-type: none;
+}

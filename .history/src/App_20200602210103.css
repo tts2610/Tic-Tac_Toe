@@ -7,16 +7,8 @@
     display: flex;
     justify-content: center;
     border-image: 30 round url(https://mdn.mozillademos.org/files/6011/border-image-3.png);
-    /* https://mdn.mozillademos.org/files/6007/border-image-1.png */
 }
 
 .myLi {
     list-style-type: none;
-    display: flex;
-    justify-content: center;
-}
-
-.col-lg-4 {
-    display: flex;
-    justify-content: center;
 }

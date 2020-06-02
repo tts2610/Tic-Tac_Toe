@@ -175,13 +175,13 @@ export default class App extends Component {
       <div className="App">
         <Container>
           <Row className="mt-5">
-            <Col lg={8}>
+            <Col sm={8}>
               <Board
                 board={this.state.board}
                 onClick={this.onClickSquareHandle}
               />
             </Col>
-            <Col lg={4}>
+            <Col sm={4}>
               <HistoryBoard
                 history={this.state.history}
                 resetPhase={this.resetPhase}
