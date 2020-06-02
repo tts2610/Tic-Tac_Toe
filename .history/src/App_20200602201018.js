@@ -129,11 +129,11 @@ export default class App extends Component {
       {
         board: mySetting.board,
         currentMove: "",
+        currentPhase: 1,
       },
       () => {
         this.setState({
           history: mySetting.history,
-          currentPhase: 1,
         });
       }
     );

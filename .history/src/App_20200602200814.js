@@ -125,18 +125,12 @@ export default class App extends Component {
   }
 
   resetGame() {
-    this.setState(
-      {
-        board: mySetting.board,
-        currentMove: "",
-      },
-      () => {
-        this.setState({
-          history: mySetting.history,
-          currentPhase: 1,
-        });
-      }
-    );
+    this.setState({
+      board: mySetting.board,
+      currentMove: "",
+      history: null,
+      currentPhase: 1,
+    });
   }
 
   spliceDict(dict, minKey, maxKey) {
