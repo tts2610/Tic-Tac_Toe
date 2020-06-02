@@ -5,17 +5,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Container } from "react-bootstrap";
 import HistoryBoard from "./components/HistoryBoard";
 import * as mySetting from "./settings";
+let timer = null;
 export default class App extends Component {
   state = {
     board: mySetting.board,
     currentMove: "",
     history: mySetting.history,
     currentPhase: 1,
-    myTurn: true,
-    finalResult: "",
+    msg: "Your turn!",
   };
 
-  onClickSquareHandle = (element, isOpponentTurn) => {
+  onClickSquareHandle = (element) => {
     if (!element.isChecked) {
       this.setState(
         {
@@ -45,31 +45,66 @@ export default class App extends Component {
             ) {
               this.resetGame();
               alert("win!!!");
-            } else if (!isOpponentTurn) {
+            } else {
               this.setState({ currentPhase: this.state.currentPhase + 1 });
               this.setState({
                 history: {
                   ...this.state.history,
                   [this.state.currentPhase]: this.state.board,
                 },
-                myTurn: false,
               });
-              if (!isOpponentTurn)
-                setTimeout(() => {
-                  let filterList = this.state.board.filter((x) => !x.isChecked);
-                  console.log(filterList);
-                  const randomElement =
-                    filterList[Math.floor(Math.random() * filterList.length)];
-
-                  this.onClickSquareHandle(randomElement, true);
-                }, 2000);
-            } else {
-              this.setState({ myTurn: true });
             }
           });
         }
       );
     }
+  };
+  oponentTurn() {
+    setTimeout(() => {
+      let filterList = this.state.board.filter((x) => !x.isChecked);
+      console.log(filterList);
+      const randomElement =
+        filterList[Math.floor(Math.random() * filterList.length)];
+      this.opponentTurn(randomElement);
+    }, 2000);
+  }
+  opponentTurnHandle = (element) => {
+    if (!element.isChecked) {
+      this.setState(
+        {
+          currentMove: this.state.currentMove === "x" ? "o" : "x",
+        },
+        () => {
+          const list = this.state.board.map((item, j) => {
+            if (item.id === element.id && item.value === "") {
+              return {
+                id: item.id,
+                value: this.state.currentMove,
+                isChecked: true,
+              };
+            } else if (item.value === "") {
+              return { id: item.id, value: item.value, isChecked: false };
+            } else {
+              return { id: item.id, value: item.value, isChecked: true };
+            }
+          });
+          this.setState({ board: list }, () => {
+            if (
+              this.checkVertical(element) ||
+              this.checkHorizonal(element) ||
+              this.checkRightDiagonal() ||
+              this.checkLeftDiagonal() ||
+              this.checkAllFilled()
+            ) {
+              this.resetGame();
+              alert("win!!!");
+            }
+          });
+        }
+      );
+    }
+
+    // this.onClickSquareHandle(mySetting.board.find((x) => !x.isChecked));
   };
 
   checkVertical(currentChoice) {
@@ -100,6 +135,15 @@ export default class App extends Component {
     return count === 3;
   }
 
+  compareArrays(array1, array2) {
+    return (
+      array1.length === array2.length &&
+      array1.every(function (element, index) {
+        return element === array2[index];
+      })
+    );
+  }
+
   checkRightDiagonal() {
     let count = 0;
     this.state.board.forEach((element) => {
@@ -127,15 +171,6 @@ export default class App extends Component {
     });
 
     return count === 3;
-  }
-
-  compareArrays(array1, array2) {
-    return (
-      array1.length === array2.length &&
-      array1.every(function (element, index) {
-        return element === array2[index];
-      })
-    );
   }
 
   checkAllFilled() {
@@ -173,10 +208,7 @@ export default class App extends Component {
   }
 
   resetPhase = (phase) => {
-    this.setState(
-      { history: this.spliceDict(this.state.history, 0, phase) },
-      () => this.setState({ myTurn: false })
-    );
+    this.setState({ history: this.spliceDict(this.state.history, 0, phase) });
     this.setState(
       {
         currentMove: this.state.currentMove === "x" ? "o" : "x",
@@ -184,63 +216,33 @@ export default class App extends Component {
         board: this.state.history[phase],
       },
       () => {
-        setTimeout(() => {
-          let filterList = this.state.board.filter((x) => !x.isChecked);
-          console.log(filterList);
-          const randomElement =
-            filterList[Math.floor(Math.random() * filterList.length)];
-
-          this.onClickSquareHandle(randomElement, true);
-        }, 2000);
+        let filterList = this.state.board.filter((x) => !x.isChecked);
+        console.log(filterList);
+        const randomElement =
+          filterList[Math.floor(Math.random() * filterList.length)];
+        this.opponentTurn(randomElement);
       }
     );
   };
   render() {
     return (
       <div className="App">
-        <h1 className="title">Sean vs CPU</h1>
         <Container>
           <Row className="mt-5">
-            <Col lg={3}>
-              <Row className="des">
-                <div>
-                  <img
-                    src={process.env.PUBLIC_URL + "x_2.png"}
-                    alt=""
-                    width="30"
-                    height="30"
-                  ></img>
-                  : You{" "}
-                </div>
-                <div>
-                  <img
-                    src={process.env.PUBLIC_URL + "o.png"}
-                    alt=""
-                    width="30"
-                    height="30"
-                  ></img>
-                  : Opponent
-                </div>
-              </Row>
-              <hr></hr>
-              <Row className="prompt">
-                {this.state.myTurn ? "Your Turn" : "Opponent's Turn"}
-              </Row>
-            </Col>
-            <Col lg={7}>
+            <Col lg={8}>
               <Board
-                enabled={this.state.myTurn}
                 board={this.state.board}
                 onClick={this.onClickSquareHandle}
               />
             </Col>
-            <Col lg={2}>
+            <Col lg={4}>
               <HistoryBoard
                 history={this.state.history}
                 resetPhase={this.resetPhase}
               />
             </Col>
           </Row>
+          <Row>{this.state.msg}</Row>
         </Container>
       </div>
     );

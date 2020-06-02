@@ -3,7 +3,7 @@ import React from "react";
 export default function Square({ value, onClick }) {
   if (value === "x") {
     return (
-      <div className="box" onClick={() => onClick(value, false)}>
+      <div className="box" onClick={() => onClick(value,true)}>
         <img
           width="150"
           height="150"
@@ -15,7 +15,7 @@ export default function Square({ value, onClick }) {
   }
   if (value === "o") {
     return (
-      <div className="box" onClick={() => onClick(value, false)}>
+      <div className="box" onClick={() => onClick(value,true)}>
         <img
           width="150"
           height="150"

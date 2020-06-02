@@ -198,7 +198,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="title">Sean vs CPU</h1>
+        <h1>Sean VS CPU</h1>
         <Container>
           <Row className="mt-5">
             <Col lg={3}>

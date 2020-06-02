@@ -5,14 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Container } from "react-bootstrap";
 import HistoryBoard from "./components/HistoryBoard";
 import * as mySetting from "./settings";
+let timer = null;
 export default class App extends Component {
   state = {
     board: mySetting.board,
     currentMove: "",
     history: mySetting.history,
     currentPhase: 1,
-    myTurn: true,
-    finalResult: "",
+    msg: "Your turn!",
   };
 
   onClickSquareHandle = (element, isOpponentTurn) => {
@@ -45,26 +45,23 @@ export default class App extends Component {
             ) {
               this.resetGame();
               alert("win!!!");
-            } else if (!isOpponentTurn) {
+            } else if (isOpponentTurn) {
               this.setState({ currentPhase: this.state.currentPhase + 1 });
               this.setState({
                 history: {
                   ...this.state.history,
                   [this.state.currentPhase]: this.state.board,
                 },
-                myTurn: false,
+                msg: "Opponent's Turn",
               });
-              if (!isOpponentTurn)
+              if (isOpponentTurn)
                 setTimeout(() => {
                   let filterList = this.state.board.filter((x) => !x.isChecked);
                   console.log(filterList);
                   const randomElement =
                     filterList[Math.floor(Math.random() * filterList.length)];
-
-                  this.onClickSquareHandle(randomElement, true);
+                  this.onClickSquareHandle(randomElement, false);
                 }, 2000);
-            } else {
-              this.setState({ myTurn: true });
             }
           });
         }
@@ -173,10 +170,7 @@ export default class App extends Component {
   }
 
   resetPhase = (phase) => {
-    this.setState(
-      { history: this.spliceDict(this.state.history, 0, phase) },
-      () => this.setState({ myTurn: false })
-    );
+    this.setState({ history: this.spliceDict(this.state.history, 0, phase) });
     this.setState(
       {
         currentMove: this.state.currentMove === "x" ? "o" : "x",
@@ -189,8 +183,7 @@ export default class App extends Component {
           console.log(filterList);
           const randomElement =
             filterList[Math.floor(Math.random() * filterList.length)];
-
-          this.onClickSquareHandle(randomElement, true);
+          this.onClickSquareHandle(randomElement, false);
         }, 2000);
       }
     );
@@ -198,49 +191,22 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="title">Sean vs CPU</h1>
         <Container>
           <Row className="mt-5">
-            <Col lg={3}>
-              <Row className="des">
-                <div>
-                  <img
-                    src={process.env.PUBLIC_URL + "x_2.png"}
-                    alt=""
-                    width="30"
-                    height="30"
-                  ></img>
-                  : You{" "}
-                </div>
-                <div>
-                  <img
-                    src={process.env.PUBLIC_URL + "o.png"}
-                    alt=""
-                    width="30"
-                    height="30"
-                  ></img>
-                  : Opponent
-                </div>
-              </Row>
-              <hr></hr>
-              <Row className="prompt">
-                {this.state.myTurn ? "Your Turn" : "Opponent's Turn"}
-              </Row>
-            </Col>
-            <Col lg={7}>
+            <Col lg={8}>
               <Board
-                enabled={this.state.myTurn}
                 board={this.state.board}
                 onClick={this.onClickSquareHandle}
               />
             </Col>
-            <Col lg={2}>
+            <Col lg={4}>
               <HistoryBoard
                 history={this.state.history}
                 resetPhase={this.resetPhase}
               />
             </Col>
           </Row>
+          <Row>{this.state.msg}</Row>
         </Container>
       </div>
     );

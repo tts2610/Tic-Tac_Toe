@@ -12,7 +12,6 @@ export default class App extends Component {
     history: mySetting.history,
     currentPhase: 1,
     myTurn: true,
-    finalResult: "",
   };
 
   onClickSquareHandle = (element, isOpponentTurn) => {
@@ -198,10 +197,9 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="title">Sean vs CPU</h1>
         <Container>
           <Row className="mt-5">
-            <Col lg={3}>
+            <Col lg={2}>
               <Row className="des">
                 <div>
                   <img
@@ -227,7 +225,7 @@ export default class App extends Component {
                 {this.state.myTurn ? "Your Turn" : "Opponent's Turn"}
               </Row>
             </Col>
-            <Col lg={7}>
+            <Col sm={8}>
               <Board
                 enabled={this.state.myTurn}
                 board={this.state.board}

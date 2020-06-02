@@ -3,7 +3,7 @@ import Square from "./Square";
 import { Row, Col } from "react-bootstrap/";
 import * as mySetting from "../settings";
 
-export default function Board({ board, onClick, enabled }) {
+export default function Board({ board, onClick, disabled }) {
   let renderSquare = (row) => {
     let rowSquare = [];
     board.forEach((element) => {
@@ -24,21 +24,24 @@ export default function Board({ board, onClick, enabled }) {
     <>
       <Row
         style={
-          (mySetting.styles.row, { pointerEvents: enabled ? "auto" : "none" })
+          (mySetting.styles.row,
+          { pointerEvents: this.props.disabled ? "none" : "auto" })
         }
       >
         {renderSquare(0)}
       </Row>
       <Row
         style={
-          (mySetting.styles.row, { pointerEvents: enabled ? "auto" : "none" })
+          (mySetting.styles.row,
+          { pointerEvents: this.props.disabled ? "none" : "auto" })
         }
       >
         {renderSquare(1)}
       </Row>
       <Row
         style={
-          (mySetting.styles.row, { pointerEvents: enabled ? "auto" : "none" })
+          (mySetting.styles.row,
+          { pointerEvents: this.props.disabled ? "none" : "auto" })
         }
       >
         {renderSquare(2)}

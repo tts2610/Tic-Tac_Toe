@@ -24,21 +24,21 @@ export default function Board({ board, onClick, enabled }) {
     <>
       <Row
         style={
-          (mySetting.styles.row, { pointerEvents: enabled ? "auto" : "none" })
+          (mySetting.styles.row, { pointerEvents: enabled ? "none" : "auto" })
         }
       >
         {renderSquare(0)}
       </Row>
       <Row
         style={
-          (mySetting.styles.row, { pointerEvents: enabled ? "auto" : "none" })
+          (mySetting.styles.row, { pointerEvents: enabled ? "none" : "auto" })
         }
       >
         {renderSquare(1)}
       </Row>
       <Row
         style={
-          (mySetting.styles.row, { pointerEvents: enabled ? "auto" : "none" })
+          (mySetting.styles.row, { pointerEvents: enabled ? "none" : "auto" })
         }
       >
         {renderSquare(2)}

@@ -24,19 +24,11 @@
 .prompt {
     font-size: xx-large;
     color: red;
-    display: flex;
-    justify-content: center;
-    background-color: black;
+    text-align: center;
 }
 
 .des {
     flex-direction: column;
     font-size: xx-large;
     padding: 5px;
-}
-
-.title {
-    display: flex;
-    justify-content: center;
-    font-size: 100px;
 }
