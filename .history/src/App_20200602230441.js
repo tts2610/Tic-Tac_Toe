@@ -45,7 +45,7 @@ export default class App extends Component {
               this.resetGame();
               alert("Sean Win!!!");
             } else if (this.checkAllFilled()) {
-              alert("Draw!!!");
+              this.setState({ finalResult: "Draw!!!" });
             } else if (!isOpponentTurn) {
               this.setState({ currentPhase: this.state.currentPhase + 1 });
               this.setState({
@@ -55,14 +55,15 @@ export default class App extends Component {
                 },
                 myTurn: false,
               });
-              setTimeout(() => {
-                let filterList = this.state.board.filter((x) => !x.isChecked);
-                console.log(filterList);
-                const randomElement =
-                  filterList[Math.floor(Math.random() * filterList.length)];
+              if (!isOpponentTurn)
+                setTimeout(() => {
+                  let filterList = this.state.board.filter((x) => !x.isChecked);
+                  console.log(filterList);
+                  const randomElement =
+                    filterList[Math.floor(Math.random() * filterList.length)];
 
-                this.onClickSquareHandle(randomElement, true);
-              }, 1000);
+                  this.onClickSquareHandle(randomElement, true);
+                }, 1000);
             } else {
               this.setState({ myTurn: true });
             }

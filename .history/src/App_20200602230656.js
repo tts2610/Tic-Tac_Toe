@@ -63,9 +63,9 @@ export default class App extends Component {
 
                 this.onClickSquareHandle(randomElement, true);
               }, 1000);
-            } else {
+               
               this.setState({ myTurn: true });
-            }
+            
           });
         }
       );

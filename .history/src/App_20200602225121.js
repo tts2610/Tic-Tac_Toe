@@ -13,6 +13,7 @@ export default class App extends Component {
     history: mySetting.history,
     currentPhase: 1,
     myTurn: true,
+    finalResult: "",
   };
 
   onClickSquareHandle = (element, isOpponentTurn) => {
@@ -43,9 +44,7 @@ export default class App extends Component {
               this.checkLeftDiagonal()
             ) {
               this.resetGame();
-              alert("Sean Win!!!");
-            } else if (this.checkAllFilled()) {
-              alert("Draw!!!");
+              alert("Sean win!!!");
             } else if (!isOpponentTurn) {
               this.setState({ currentPhase: this.state.currentPhase + 1 });
               this.setState({
@@ -55,14 +54,15 @@ export default class App extends Component {
                 },
                 myTurn: false,
               });
-              setTimeout(() => {
-                let filterList = this.state.board.filter((x) => !x.isChecked);
-                console.log(filterList);
-                const randomElement =
-                  filterList[Math.floor(Math.random() * filterList.length)];
+              if (!isOpponentTurn)
+                setTimeout(() => {
+                  let filterList = this.state.board.filter((x) => !x.isChecked);
+                  console.log(filterList);
+                  const randomElement =
+                    filterList[Math.floor(Math.random() * filterList.length)];
 
-                this.onClickSquareHandle(randomElement, true);
-              }, 1000);
+                  this.onClickSquareHandle(randomElement, true);
+                }, 1000);
             } else {
               this.setState({ myTurn: true });
             }
@@ -218,6 +218,7 @@ export default class App extends Component {
               />
             </Col>
           </Row>
+          <Row className="finalResult">{this.state.finalResult}</Row>
         </Container>
       </div>
     );
