@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Row, Col, Container } from "react-bootstrap";
 import HistoryBoard from "./components/HistoryBoard";
 import * as mySetting from "./settings";
-import Des from "./components/Des";
 export default class App extends Component {
   state = {
     board: mySetting.board,
@@ -203,7 +202,30 @@ export default class App extends Component {
         <Container>
           <Row className="mt-5">
             <Col lg={3}>
-              <Des myTurn={this.state.myTurn} />
+              <Row className="des">
+                <div>
+                  <img
+                    src={process.env.PUBLIC_URL + "x_2.png"}
+                    alt=""
+                    width="30"
+                    height="30"
+                  ></img>
+                  : You{" "}
+                </div>
+                <div>
+                  <img
+                    src={process.env.PUBLIC_URL + "o.png"}
+                    alt=""
+                    width="30"
+                    height="30"
+                  ></img>
+                  : Opponent
+                </div>
+              </Row>
+              <hr></hr>
+              <Row className="prompt">
+                {this.state.myTurn ? "Your Turn" : "Opponent's Turn"}
+              </Row>
             </Col>
             <Col lg={7}>
               <Board

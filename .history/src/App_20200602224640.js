@@ -203,7 +203,7 @@ export default class App extends Component {
         <Container>
           <Row className="mt-5">
             <Col lg={3}>
-              <Des myTurn={this.state.myTurn} />
+              <Des myTurn={this.state.myTurn}
             </Col>
             <Col lg={7}>
               <Board
