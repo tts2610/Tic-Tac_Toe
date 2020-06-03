@@ -199,7 +199,7 @@ export default class App extends Component {
       () => {
         this.setState({
           myTurn: false,
-          currentPhase: Object.keys(this.state.history).length,
+          currentPhase: Object.keys(this.state.history).length - 1,
         });
         setTimeout(() => {
           let filterList = this.state.board.filter((x) => !x.isChecked);
