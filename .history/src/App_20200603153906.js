@@ -8,7 +8,6 @@ import * as mySetting from "./settings";
 import Des from "./components/Des";
 import FacebookLogin from "react-facebook-login";
 let API_KEY = process.env.REACT_APP_APIKEY;
-let timer = null;
 export default class App extends Component {
   state = {
     board: mySetting.board,
@@ -18,13 +17,7 @@ export default class App extends Component {
     myTurn: true,
     isLogin: false,
     currentUser: "",
-    currentTimeEllapsed: 30,
   };
-  componentDidMount() {}
-
-  componentWillUnmount() {
-    clearTimeout(timer);
-  }
 
   onClickSquareHandle = (element, isOpponentTurn) => {
     if (!element.isChecked) {
@@ -54,7 +47,6 @@ export default class App extends Component {
               this.checkLeftDiagonal()[0]
             ) {
               this.postToCoderSchool();
-              clearTimeout(timer);
               this.resetGame();
               alert(`${this.state.currentUser} Win!!!`);
             } else if (mySetting.checkAllFilled(this.state.board)) {
@@ -94,11 +86,11 @@ export default class App extends Component {
     }
   };
 
-  postToCoderSchool = async (currentTimeEllapsed) => {
+  postToCoderSchool = async () => {
     let data = new URLSearchParams();
-    data.append("player", this.state.currentUser);
+    data.append("player", currentPlayer);
     data.append("score", 30 - currentTimeEllapsed);
-    const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
+    const url = `http://ftw-highscores.herokuapp.com/tictactoe-dev`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -107,7 +99,6 @@ export default class App extends Component {
       body: data.toString(),
       json: true,
     });
-    console.log(response.items);
   };
 
   checkVertical(currentChoice) {
@@ -248,16 +239,6 @@ export default class App extends Component {
         isLogin: true,
         currentUser: resp.name,
       });
-      timer = setInterval(() => {
-        if (this.state.currentTimeEllapsed === 0) {
-          this.postToCoderSchool(this.state.currentTimeEllapsed);
-          clearTimeout(timer);
-          return;
-        }
-        this.setState({
-          currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
-        });
-      }, 1000);
     }
   }
 
@@ -284,7 +265,6 @@ export default class App extends Component {
                 myTurn={this.state.myTurn}
                 postToCoderSchool={this.postToCoderSchool}
                 currentPlayer={this.state.currentUser}
-                currentTimeEllapsed={this.state.currentTimeEllapsed}
               />
             </Col>
             <Col lg={7}>

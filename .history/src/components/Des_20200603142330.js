@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Row } from "react-bootstrap";
 
-export default function Des({ myTurn, currentTimeEllapsed }) {
-  //   const [currentTimeEllapsed, setCurrentTimeEllapsed] = useState(30);
+export default function Des({ myTurn }) {
+  const [currentTimeEllapsed, setCurrentTimeEllapsed] = useState(30);
+
+  startCounting(){
+      setCurrentTimeEllapsed((prev){prev +1});
+  }
 
   return (
     <div className="des-container">

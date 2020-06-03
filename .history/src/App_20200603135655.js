@@ -8,7 +8,6 @@ import * as mySetting from "./settings";
 import Des from "./components/Des";
 import FacebookLogin from "react-facebook-login";
 let API_KEY = process.env.REACT_APP_APIKEY;
-let timer = null;
 export default class App extends Component {
   state = {
     board: mySetting.board,
@@ -17,14 +16,7 @@ export default class App extends Component {
     currentPhase: 1,
     myTurn: true,
     isLogin: false,
-    currentUser: "",
-    currentTimeEllapsed: 30,
   };
-  componentDidMount() {}
-
-  componentWillUnmount() {
-    clearTimeout(timer);
-  }
 
   onClickSquareHandle = (element, isOpponentTurn) => {
     if (!element.isChecked) {
@@ -53,10 +45,8 @@ export default class App extends Component {
               this.checkRightDiagonal()[0] ||
               this.checkLeftDiagonal()[0]
             ) {
-              this.postToCoderSchool();
-              clearTimeout(timer);
               this.resetGame();
-              alert(`${this.state.currentUser} Win!!!`);
+              alert("Sean Win!!!");
             } else if (mySetting.checkAllFilled(this.state.board)) {
               this.resetGame();
               alert("Draw!!!");
@@ -92,22 +82,6 @@ export default class App extends Component {
         }
       );
     }
-  };
-
-  postToCoderSchool = async (currentTimeEllapsed) => {
-    let data = new URLSearchParams();
-    data.append("player", this.state.currentUser);
-    data.append("score", 30 - currentTimeEllapsed);
-    const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: data.toString(),
-      json: true,
-    });
-    console.log(response.items);
   };
 
   checkVertical(currentChoice) {
@@ -246,18 +220,7 @@ export default class App extends Component {
     if (resp.status !== "unknown") {
       this.setState({
         isLogin: true,
-        currentUser: resp.name,
       });
-      timer = setInterval(() => {
-        if (this.state.currentTimeEllapsed === 0) {
-          this.postToCoderSchool(this.state.currentTimeEllapsed);
-          clearTimeout(timer);
-          return;
-        }
-        this.setState({
-          currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
-        });
-      }, 1000);
     }
   }
 
@@ -276,16 +239,11 @@ export default class App extends Component {
     }
     return (
       <div className="App">
-        <h1 className="title">{this.state.currentUser} vs CPU</h1>
+        <h1 className="title">Sean vs CPU</h1>
         <Container>
           <Row className="mt-5">
             <Col lg={3}>
-              <Des
-                myTurn={this.state.myTurn}
-                postToCoderSchool={this.postToCoderSchool}
-                currentPlayer={this.state.currentUser}
-                currentTimeEllapsed={this.state.currentTimeEllapsed}
-              />
+              <Des myTurn={this.state.myTurn} />
             </Col>
             <Col lg={7}>
               <Board

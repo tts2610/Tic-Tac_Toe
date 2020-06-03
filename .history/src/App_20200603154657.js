@@ -20,7 +20,18 @@ export default class App extends Component {
     currentUser: "",
     currentTimeEllapsed: 30,
   };
-  componentDidMount() {}
+  componentDidMount() {
+    timer = setInterval(() => {
+      if (this.state.currentTimeEllapsed === 0) {
+        this.postToCoderSchool(this.state.currentTimeEllapsed);
+        clearTimeout(timer);
+        return;
+      }
+      this.setState({
+        currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
+      });
+    }, 1000);
+  }
 
   componentWillUnmount() {
     clearTimeout(timer);
@@ -98,7 +109,7 @@ export default class App extends Component {
     let data = new URLSearchParams();
     data.append("player", this.state.currentUser);
     data.append("score", 30 - currentTimeEllapsed);
-    const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
+    const url = `http://ftw-highscores.herokuapp.com/tictactoe-dev`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -248,16 +259,6 @@ export default class App extends Component {
         isLogin: true,
         currentUser: resp.name,
       });
-      timer = setInterval(() => {
-        if (this.state.currentTimeEllapsed === 0) {
-          this.postToCoderSchool(this.state.currentTimeEllapsed);
-          clearTimeout(timer);
-          return;
-        }
-        this.setState({
-          currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
-        });
-      }, 1000);
     }
   }
 

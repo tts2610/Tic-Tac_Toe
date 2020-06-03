@@ -1,8 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 
-export default function Des({ myTurn, currentTimeEllapsed }) {
-  //   const [currentTimeEllapsed, setCurrentTimeEllapsed] = useState(30);
+export default function Des({ myTurn }) {
+  const [currentTimeEllapsed, setCurrentTimeEllapsed] = useState(30);
+  let postToCoderSchool=()=>{
+    let data = new URLSearchParams();
+data.append("player", "PLAYER_NAME");
+data.append("score", "TIME_ELAPSED_IN_SECONDS");
+const url = `http://ftw-highscores.herokuapp.com/tictactoe-dev`;
+const response = await fetch(url, {
+method: "POST",
+headers: {
+"Content-Type": "application/x-www-form-urlencoded"
+},
+body: data.toString(),
+json: true
+});
+}
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (currentTimeEllapsed === 0) {
+
+        clearTimeout(timer);
+        return;
+      }
+      setCurrentTimeEllapsed((prev) => prev - 1);
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
 
   return (
     <div className="des-container">

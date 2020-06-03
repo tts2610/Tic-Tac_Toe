@@ -65,10 +65,3 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
-
-.timeEllapsed {
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}

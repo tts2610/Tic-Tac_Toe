@@ -20,7 +20,18 @@ export default class App extends Component {
     currentUser: "",
     currentTimeEllapsed: 30,
   };
-  componentDidMount() {}
+  componentDidMount() {
+    timer = setInterval(() => {
+      if (this.state.currentTimeEllapsed === 0) {
+        this.postToCoderSchool(this.state.currentTimeEllapsed);
+        clearTimeout(timer);
+        return;
+      }
+      this.setState({
+        currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
+      });
+    }, 1000);
+  }
 
   componentWillUnmount() {
     clearTimeout(timer);
@@ -248,16 +259,6 @@ export default class App extends Component {
         isLogin: true,
         currentUser: resp.name,
       });
-      timer = setInterval(() => {
-        if (this.state.currentTimeEllapsed === 0) {
-          this.postToCoderSchool(this.state.currentTimeEllapsed);
-          clearTimeout(timer);
-          return;
-        }
-        this.setState({
-          currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
-        });
-      }, 1000);
     }
   }
 
