@@ -127,7 +127,7 @@ export default class App extends Component {
 
   getDataScore = async () => {
     const url =
-      "https://ftw-highscores.herokuapp.com/tictactoe-dev?limit=5&reverse=1";
+      "https://ftw-highscores.herokuapp.com/tictactoe-dev?limit=5&reverse=0";
     let data = await fetch(url);
     let result = await data.json();
     console.log(result.items);
