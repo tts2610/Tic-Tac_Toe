@@ -194,7 +194,7 @@ export default class App extends Component {
       {
         history: mySetting.spliceDict(this.state.history, 0, phase),
         currentMove: this.state.currentMove === "x" ? "o" : "x",
-        currentPhase: Object.keys(this.state.history).length - 1,
+        currentPhase: this.state.currentPhase - phase + 1,
         board: this.state.history[phase],
       },
       () => {

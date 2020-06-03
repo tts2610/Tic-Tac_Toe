@@ -194,7 +194,7 @@ export default class App extends Component {
       {
         history: mySetting.spliceDict(this.state.history, 0, phase),
         currentMove: this.state.currentMove === "x" ? "o" : "x",
-        currentPhase: Object.keys(this.state.history).length - 1,
+        currentPhase: this.state.currentPhase - 1,
         board: this.state.history[phase],
       },
       () => {
@@ -216,7 +216,7 @@ export default class App extends Component {
         <h1 className="title">Sean vs CPU</h1>
         <Container>
           <Row className="mt-5">
-            <Col lg={3}>
+            <Col lg={3} className="des-container">
               <Des myTurn={this.state.myTurn} />
             </Col>
             <Col lg={7}>

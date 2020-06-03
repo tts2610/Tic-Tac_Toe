@@ -32,11 +32,11 @@
     display: flex;
     justify-content: center;
     background-color: lightyellow;
-    padding: 6px;
+    padding: 10px;
 }
 
 .des-container {
-    padding: 0px 10px 50px 10px;
+    padding: 0px 20px 50px 20px;
 }
 
 .des {
