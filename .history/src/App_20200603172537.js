@@ -19,7 +19,6 @@ export default class App extends Component {
     isLogin: false,
     currentUser: "",
     currentTimeEllapsed: 30,
-    ranking: "",
   };
   componentDidMount() {}
 
@@ -118,7 +117,7 @@ export default class App extends Component {
     const url = "https://ftw-highscores.herokuapp.com/tictactoe-dev";
     let data = await fetch(url);
     let result = await data.json();
-    this.setState({ ranking: result.items });
+    this.setState({ getData: result.items });
   };
 
   checkVertical(currentChoice) {

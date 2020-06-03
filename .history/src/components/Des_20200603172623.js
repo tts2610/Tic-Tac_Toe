@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row } from "react-bootstrap";
 
 export default function Des({ myTurn, currentTimeEllapsed, ranking }) {
@@ -30,11 +30,9 @@ export default function Des({ myTurn, currentTimeEllapsed, ranking }) {
       <Row className="prompt">{myTurn ? "Your Turn" : "Opponent's Turn"}</Row>
       <Row className="timeEllapsed">00:00:{currentTimeEllapsed}</Row>
       <Row>
-        {ranking != null
-          ? ranking.map((x, item) => {
-              return <li key={item}>{x}</li>;
-            })
-          : ""}
+        {ranking.map((x, item) => {
+          return <li key={item}>x</li>;
+        })}
       </Row>
     </div>
   );

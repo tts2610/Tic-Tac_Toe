@@ -19,7 +19,6 @@ export default class App extends Component {
     isLogin: false,
     currentUser: "",
     currentTimeEllapsed: 30,
-    ranking: "",
   };
   componentDidMount() {}
 
@@ -107,18 +106,18 @@ export default class App extends Component {
       body: data.toString(),
       json: true,
     });
-
+    console.log(response.items);
     if (response.status === 200) {
-      this.getDataScore();
       this.resetGame();
     }
   };
 
   getDataScore = async () => {
-    const url = "https://ftw-highscores.herokuapp.com/tictactoe-dev";
+    const url = "http://ftw-highscores.herokuapp.com/tictactoe-dev";
     let data = await fetch(url);
     let result = await data.json();
-    this.setState({ ranking: result.items });
+    console.log("REesul is: ", result);
+    this.setState({ getData: result.items });
   };
 
   checkVertical(currentChoice) {
@@ -304,7 +303,6 @@ export default class App extends Component {
                 postToCoderSchool={this.postToCoderSchool}
                 currentPlayer={this.state.currentUser}
                 currentTimeEllapsed={this.state.currentTimeEllapsed}
-                rankink={this.state.ranking}
               />
             </Col>
             <Col lg={7}>

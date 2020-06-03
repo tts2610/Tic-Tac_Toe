@@ -19,7 +19,6 @@ export default class App extends Component {
     isLogin: false,
     currentUser: "",
     currentTimeEllapsed: 30,
-    ranking: "",
   };
   componentDidMount() {}
 
