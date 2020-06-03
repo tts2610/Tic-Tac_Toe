@@ -53,7 +53,7 @@ export default class App extends Component {
               this.checkRightDiagonal()[0] ||
               this.checkLeftDiagonal()[0]
             ) {
-              this.postToCoderSchool(this.state.currentTimeEllapsed);
+              this.postToCoderSchool();
               clearTimeout(timer);
               this.resetGame();
               alert(`${this.state.currentUser} Win!!!`);
@@ -96,6 +96,7 @@ export default class App extends Component {
 
   postToCoderSchool = async (currentTimeEllapsed) => {
     let data = new URLSearchParams();
+    alert(currentTimeEllapsed);
     data.append("player", this.state.currentUser);
     data.append("score", 30 - currentTimeEllapsed);
     const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
@@ -107,9 +108,7 @@ export default class App extends Component {
       body: data.toString(),
       json: true,
     });
-    if (response.status === 200) {
-      this.resetGame();
-    }
+    console.log(response.items);
   };
 
   checkVertical(currentChoice) {
@@ -215,11 +214,7 @@ export default class App extends Component {
           history: mySetting.history,
           currentPhase: 1,
           myTurn: true,
-          currentTimeEllapsed: 30,
         });
-
-        clearInterval(timer);
-        this.startCounting();
       }
     );
   }
@@ -254,22 +249,17 @@ export default class App extends Component {
         isLogin: true,
         currentUser: resp.name,
       });
-
-      this.startCounting();
+      timer = setInterval(() => {
+        if (this.state.currentTimeEllapsed === 0) {
+          this.postToCoderSchool(this.state.currentTimeEllapsed);
+          clearTimeout(timer);
+          return;
+        }
+        this.setState({
+          currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
+        });
+      }, 1000);
     }
-  }
-
-  startCounting() {
-    timer = setInterval(() => {
-      if (this.state.currentTimeEllapsed === 0) {
-        this.postToCoderSchool(this.state.currentTimeEllapsed);
-        clearTimeout(timer);
-        return;
-      }
-      this.setState({
-        currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
-      });
-    }, 1000);
   }
 
   render() {

@@ -217,9 +217,6 @@ export default class App extends Component {
           myTurn: true,
           currentTimeEllapsed: 30,
         });
-
-        clearInterval(timer);
-        this.startCounting();
       }
     );
   }
@@ -254,22 +251,17 @@ export default class App extends Component {
         isLogin: true,
         currentUser: resp.name,
       });
-
-      this.startCounting();
+      timer = setInterval(() => {
+        if (this.state.currentTimeEllapsed === 0) {
+          this.postToCoderSchool(this.state.currentTimeEllapsed);
+          clearTimeout(timer);
+          return;
+        }
+        this.setState({
+          currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
+        });
+      }, 1000);
     }
-  }
-
-  startCounting() {
-    timer = setInterval(() => {
-      if (this.state.currentTimeEllapsed === 0) {
-        this.postToCoderSchool(this.state.currentTimeEllapsed);
-        clearTimeout(timer);
-        return;
-      }
-      this.setState({
-        currentTimeEllapsed: this.state.currentTimeEllapsed - 1,
-      });
-    }, 1000);
   }
 
   render() {

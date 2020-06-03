@@ -217,9 +217,6 @@ export default class App extends Component {
           myTurn: true,
           currentTimeEllapsed: 30,
         });
-
-        clearInterval(timer);
-        this.startCounting();
       }
     );
   }
