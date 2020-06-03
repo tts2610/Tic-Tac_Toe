@@ -60,9 +60,7 @@ export default class App extends Component {
               this.postToCoderSchool(this.state.currentTimeEllapsed);
               clearTimeout(timer);
               this.resetGame();
-              alert(
-                `${this.state.currentUser} Win!!! Score saved! Game reseted`
-              );
+              alert(`${this.state.currentUser} Win!!!`);
             } else if (mySetting.checkAllFilled(this.state.board)) {
               this.resetGame();
               alert("Draw!!!");

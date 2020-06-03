@@ -28,23 +28,13 @@ export default function Des({ myTurn, currentTimeEllapsed, ranking }) {
       </Row>
       <hr></hr>
       <Row className="prompt">{myTurn ? "Your Turn" : "Opponent's Turn"}</Row>
-      <Row className="timeEllapsed my-5">
+      <Row className="timeEllapsed">
         00:00:
         {currentTimeEllapsed < 10
           ? "0" + currentTimeEllapsed
           : currentTimeEllapsed}
       </Row>
-      <Row className="ranking">
-        {ranking != null
-          ? ranking.map((x) => (
-              <li key={x._id}>
-                {x.player}
-                <i className="far fa-arrows-alt-h"></i>
-                {x.score}
-              </li>
-            ))
-          : ""}
-      </Row>
+      <Row>{ranking != null ? console.log(ranking[0]) : ""}</Row>
     </div>
   );
 }

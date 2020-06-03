@@ -28,7 +28,7 @@ export default function Des({ myTurn, currentTimeEllapsed, ranking }) {
       </Row>
       <hr></hr>
       <Row className="prompt">{myTurn ? "Your Turn" : "Opponent's Turn"}</Row>
-      <Row className="timeEllapsed my-5">
+      <Row className="timeEllapsed">
         00:00:
         {currentTimeEllapsed < 10
           ? "0" + currentTimeEllapsed

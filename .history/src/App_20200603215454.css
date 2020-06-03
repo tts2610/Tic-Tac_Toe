@@ -47,7 +47,6 @@ li {
     justify-content: center;
     background-color: lightyellow;
     padding: 6px;
-    border-radius: 10px;
 }
 
 .des-container {
@@ -87,5 +86,4 @@ li {
     justify-content: center;
     margin-top: 10px;
     color: lightyellow;
-    align-items: center;
 }

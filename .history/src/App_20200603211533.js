@@ -7,7 +7,6 @@ import HistoryBoard from "./components/HistoryBoard";
 import * as mySetting from "./settings";
 import Des from "./components/Des";
 import FacebookLogin from "react-facebook-login";
-import axios from "axios";
 let API_KEY = process.env.REACT_APP_APIKEY;
 let timer = null;
 export default class App extends Component {
@@ -20,7 +19,7 @@ export default class App extends Component {
     isLogin: false,
     currentUser: "",
     currentTimeEllapsed: 30,
-    ranking: [],
+    ranking: null,
   };
   componentDidMount() {
     this.getDataScore();
@@ -60,9 +59,7 @@ export default class App extends Component {
               this.postToCoderSchool(this.state.currentTimeEllapsed);
               clearTimeout(timer);
               this.resetGame();
-              alert(
-                `${this.state.currentUser} Win!!! Score saved! Game reseted`
-              );
+              alert(`${this.state.currentUser} Win!!!`);
             } else if (mySetting.checkAllFilled(this.state.board)) {
               this.resetGame();
               alert("Draw!!!");
@@ -104,25 +101,19 @@ export default class App extends Component {
     data.append("player", this.state.currentUser);
     data.append("score", 30 - currentTimeEllapsed);
     const url = `https://ftw-highscores.herokuapp.com/tictactoe-dev`;
-    // const response = await fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //   },
-    //   body: data.toString(),
-    //   json: true,
-    // });
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: data.toString(),
+      json: true,
+    });
 
-    // if (response.status === 200) {
-    //   this.getDataScore();
-    //   this.resetGame();
-    // }
-    axios.post(url, data).then((res) => {
-      console.log(res);
-      console.log(res.data);
+    if (response.status === 200) {
       this.getDataScore();
       this.resetGame();
-    });
+    }
   };
 
   getDataScore = async () => {
@@ -130,9 +121,14 @@ export default class App extends Component {
     let data = await fetch(url);
     let result = await data.json();
     console.log(result.items);
-    this.setState({
-      ranking: result.items,
-    });
+    this.setState(
+      {
+        ranking: result.items,
+      },
+      () => {
+        console.log(this.state.ranking);
+      }
+    );
   };
 
   checkVertical(currentChoice) {
