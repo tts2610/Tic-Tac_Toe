@@ -22,6 +22,7 @@ export default class App extends Component {
     ranking: [],
   };
   componentDidMount() {
+    this.startCounting();
     this.getDataScore();
   }
 
@@ -245,6 +246,7 @@ export default class App extends Component {
         });
 
         clearInterval(timer);
+        this.startCounting();
       }
     );
   }

@@ -245,6 +245,7 @@ export default class App extends Component {
         });
 
         clearInterval(timer);
+        this.startCounting();
       }
     );
   }

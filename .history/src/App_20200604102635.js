@@ -22,6 +22,7 @@ export default class App extends Component {
     ranking: [],
   };
   componentDidMount() {
+    this.startCounting();
     this.getDataScore();
   }
 
@@ -30,9 +31,6 @@ export default class App extends Component {
   }
 
   onClickSquareHandle = (element, isOpponentTurn) => {
-    if (this.state.board.every((x) => !x.isChecked)) {
-      this.startCounting();
-    }
     if (!element.isChecked) {
       this.setState(
         {
@@ -245,6 +243,7 @@ export default class App extends Component {
         });
 
         clearInterval(timer);
+        this.startCounting();
       }
     );
   }

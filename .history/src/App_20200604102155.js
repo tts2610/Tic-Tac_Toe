@@ -8,6 +8,7 @@ import * as mySetting from "./settings";
 import Des from "./components/Des";
 // import FacebookLogin from "react-facebook-login";
 import axios from "axios";
+let API_KEY = process.env.REACT_APP_APIKEY;
 let timer = null;
 export default class App extends Component {
   state = {
@@ -17,7 +18,7 @@ export default class App extends Component {
     currentPhase: 1,
     myTurn: true,
     // isLogin: false,
-    currentUser: "Sean",
+    currentUser: "",
     currentTimeEllapsed: 30,
     ranking: [],
   };
@@ -30,9 +31,6 @@ export default class App extends Component {
   }
 
   onClickSquareHandle = (element, isOpponentTurn) => {
-    if (this.state.board.every((x) => !x.isChecked)) {
-      this.startCounting();
-    }
     if (!element.isChecked) {
       this.setState(
         {
@@ -245,6 +243,7 @@ export default class App extends Component {
         });
 
         clearInterval(timer);
+        this.startCounting();
       }
     );
   }
